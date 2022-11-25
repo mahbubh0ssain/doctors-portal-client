@@ -17,12 +17,12 @@ const AvailableAppoint = ({ date }) => {
   } = useQuery({
     queryKey: ["appointmentOptions", selectDate],
     queryFn: () =>
-      fetch(`http://localhost:5000/appointmentOptions?date=${selectDate}`).then(
-        (res) => {
-          const result = res.json();
-          return result;
-        }
-      ),
+      fetch(
+        `https://doctors-portal-server-nu-eight.vercel.app/appointmentOptions?date=${selectDate}`
+      ).then((res) => {
+        const result = res.json();
+        return result;
+      }),
   });
   if (isLoading) {
     return <Loading />;

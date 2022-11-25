@@ -15,9 +15,13 @@ const Login = () => {
     formState: { errors },
     handleSubmit,
   } = useForm(); // object hisebe destructure korse kintu
+
   const [loginError, setLoginError] = useState("");
 
   const [email, setEmail] = useState("");
+
+  const { login, googleLogin, resetPassword } = useContext(AuthContext);
+
   const passwordReset = () => {
     resetPassword(email)
       .then(() => {
@@ -33,7 +37,7 @@ const Login = () => {
   if (token) {
     navigate(from, { replace: true });
   }
-  const { login, googleLogin, resetPassword } = useContext(AuthContext);
+
   const handleLogin = (data) => {
     setLoginError("");
     login(data.email, data.password)

@@ -1,16 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext } from "react";
-import { Button } from "react-day-picker";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider";
 
 const MyAppoint = () => {
   const { user } = useContext(AuthContext);
+
+  const paid = "paid";
+  const Paynow = "Pay now";
   const { data = [] } = useQuery({
     queryKey: ["booking", user?.email],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/booking?email=${user?.email}`,
+        `https://doctors-portal-server-nu-eight.vercel.app/booking?email=${user?.email}`,
         {
           headers: {
             authorization: `Bearer ${localStorage.getItem("AccessToken")}`,
@@ -21,6 +23,7 @@ const MyAppoint = () => {
       return data;
     },
   });
+
   return (
     <div>
       <h3 className="text-3xl mb-5">
@@ -35,6 +38,7 @@ const MyAppoint = () => {
               <th>Treatment</th>
               <th>Date</th>
               <th>Time</th>
+              <th>Price</th>
               <th>Payment</th>
             </tr>
           </thead>
@@ -46,18 +50,19 @@ const MyAppoint = () => {
                 <td>{info?.treatmentName}</td>
                 <td>{info?.selectedDate}</td>
                 <td>{info?.slot}</td>
+                <td>${info?.price}</td>
 
                 <td>
                   {info.price && !info?.paid && (
                     <Link to={`/dashboard/payment/${info._id}`}>
                       <button className="btn btn-primary btn-xs">
-                        Pay now
+                        {info?.paid ? paid : Paynow}
                       </button>
                     </Link>
                   )}
-                  {info.price && info?.paid && (
+                  {/* {info.price && info?.paid && (
                     <span className="text-primary">Paid</span>
-                  )}
+                  )} */}
                 </td>
               </tr>
             ))}
