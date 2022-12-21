@@ -10,8 +10,8 @@ const Banner = () => {
           className="hero-content flex-col lg:flex-row-reverse"
           style={{
             background: `url(${bg})`,
-            "background-position": "center",
-            "background-repeat": "no-repeat",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
           }}
         >

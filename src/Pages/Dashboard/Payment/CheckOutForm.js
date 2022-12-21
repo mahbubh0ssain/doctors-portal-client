@@ -11,14 +11,17 @@ const CheckOutForm = ({ data }) => {
   const { price, email, userName, _id } = data;
 
   useEffect(() => {
-    fetch("  http://localhost:5000/create-payment-intent", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        authorization: `Bearer ${localStorage.getItem("AccessToken")}`,
-      },
-      body: JSON.stringify({ price }),
-    })
+    fetch(
+      "https://doctors-portal-server-nu-eight.vercel.app/create-payment-intent",
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("AccessToken")}`,
+        },
+        body: JSON.stringify({ price }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
   }, [price]);
@@ -66,7 +69,7 @@ const CheckOutForm = ({ data }) => {
         email,
         bookingId: _id,
       };
-      fetch("  http://localhost:5000/paymentInfo", {
+      fetch("https://doctors-portal-server-nu-eight.vercel.app/paymentInfo", {
         method: "POST",
         headers: {
           "content-type": "application/json",
