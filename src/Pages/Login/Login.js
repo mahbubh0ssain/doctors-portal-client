@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 import useToken from "../../Hooks/useToken";
+
 const Login = () => {
   useTitle("Login");
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ const Login = () => {
     setLoginError("");
     login(data.email, data.password)
       .then((res) => {
-        setUserEmail(data.email);
+        setUserEmail(data?.email);
       })
       .catch((err) => {
         console.log(err);
@@ -50,9 +51,25 @@ const Login = () => {
       });
   };
 
+  const saveUserInfo = (name, email) => {
+    const user = { name, email };
+    fetch("  http://localhost:5000/users", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // setUserEmail(email);
+      });
+  };
+
   const handleGoogleLogin = () => {
     googleLogin()
-      .then(() => {})
+      .then((res) => {
+        saveUserInfo(res?.user?.displayName, res?.user?.email);
+        setUserEmail(res?.user?.email);
+      })
       .catch(() => {});
   };
 

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider";
 
@@ -12,7 +12,7 @@ const MyAppoint = () => {
     queryKey: ["booking", user?.email],
     queryFn: async () => {
       const res = await fetch(
-        `https://doctors-portal-server-nu-eight.vercel.app/booking?email=${user?.email}`,
+        `  http://localhost:5000/booking?email=${user?.email}`,
         {
           headers: {
             authorization: `Bearer ${localStorage.getItem("AccessToken")}`,
@@ -20,6 +20,7 @@ const MyAppoint = () => {
         }
       );
       const data = await res.json();
+      console.log(data);
       return data;
     },
   });
@@ -43,10 +44,9 @@ const MyAppoint = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((info, i) => (
+            {data?.map((info, i) => (
               <tr key={info._id}>
                 <th>{i + 1}</th>
-
                 <td>{info?.treatmentName}</td>
                 <td>{info?.selectedDate}</td>
                 <td>{info?.slot}</td>

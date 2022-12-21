@@ -42,20 +42,23 @@ const Signup = () => {
 
   const saveUserInfo = (name, email) => {
     const user = { name, email };
-    fetch("https://doctors-portal-server-nu-eight.vercel.app/users", {
+    fetch("  http://localhost:5000/users", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(user),
     })
       .then((res) => res.json())
       .then((data) => {
-        setUserEmail(email);
+        // setUserEmail(email);
       });
   };
 
   const handleGoogleLogin = () => {
     googleLogin()
-      .then(() => {})
+      .then((res) => {
+        saveUserInfo(res?.user?.displayName, res?.user?.email);
+        setUserEmail(res?.user?.email);
+      })
       .catch(() => {});
   };
 
