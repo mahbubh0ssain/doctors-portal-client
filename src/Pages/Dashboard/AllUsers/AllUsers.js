@@ -6,24 +6,19 @@ const AllUsers = () => {
   const { data = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://doctors-portal-server-nu-eight.vercel.app/users"
-      );
+      const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/users`);
       const data = res.json();
       return data;
     },
   });
 
   const handleAdmin = (id) => {
-    fetch(
-      `https://doctors-portal-server-nu-eight.vercel.app/users/admin/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("AccessToken")}`,
-        },
-      }
-    )
+    fetch(`${process.env.REACT_APP_SERVER_URL}/users/admin/${id}`, {
+      method: "PUT",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("AccessToken")}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         if (data.modifiedCount > 0) {

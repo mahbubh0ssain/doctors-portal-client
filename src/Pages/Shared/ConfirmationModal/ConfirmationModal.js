@@ -5,7 +5,7 @@ const ConfirmationModal = ({ deleteDoctor, refetch }) => {
   const { name, _id } = deleteDoctor;
 
   const setFinallyDelete = (id) => {
-    fetch(`https://doctors-portal-server-nu-eight.vercel.app/doctors/${id}`, {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/doctors/${id}`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",

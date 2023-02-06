@@ -53,7 +53,7 @@ const Login = () => {
 
   const saveUserInfo = (name, email) => {
     const user = { name, email };
-    fetch("https://doctors-portal-server-nu-eight.vercel.app/users", {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/users`, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(user),

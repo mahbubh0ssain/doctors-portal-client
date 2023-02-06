@@ -4,14 +4,12 @@ const useToken = (email) => {
   const [token, setToken] = useState("");
 
   useEffect(() => {
-    fetch(
-      `https://doctors-portal-server-nu-eight.vercel.app/jwt?email=${email}`
-    )
+    fetch(`${process.env.REACT_APP_SERVER_URL}/jwt?email=${email}`)
       .then((res) => res.json())
       .then((data) => {
-        if (data.token) {
-          localStorage.setItem("AccessToken", data.token);
-          setToken(data.token);
+        if (data?.token) {
+          localStorage.setItem("AccessToken", data?.token);
+          setToken(data?.token);
         }
       });
   }, [email]);

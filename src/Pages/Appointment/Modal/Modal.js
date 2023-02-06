@@ -22,7 +22,7 @@ const Modal = ({ treatment, date, setTreatment, refetch }) => {
       price,
     };
 
-    fetch("https://doctors-portal-server-nu-eight.vercel.app/bookings", {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/bookings`, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(bookingInfo),

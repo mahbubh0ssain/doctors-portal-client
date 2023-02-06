@@ -7,9 +7,9 @@ import AllUsers from "../../Pages/Dashboard/AllUsers/AllUsers";
 import ManageDoctors from "../../Pages/Dashboard/ManageDoctors/ManageDoctors";
 import MyAppoint from "../../Pages/Dashboard/MyAppoint/MyAppoint";
 import Payment from "../../Pages/Dashboard/Payment/Payment";
+import ErrorElement from "../../Pages/ErrorElement/ErrorElement";
 import Home from "../../Pages/Home/Home";
 import Login from "../../Pages/Login/Login";
-import DisplayError from "../../Pages/Shared/DisplayError/DisplayError";
 import Signup from "../../Pages/Signup/Signup";
 import AdminRoute from "../AdminRoute/AdminRoute";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
@@ -18,7 +18,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
-    errorElement: <DisplayError />,
+    errorElement: <ErrorElement />,
     children: [
       {
         path: "/",
@@ -40,7 +40,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    errorElement: <DisplayError />,
+    errorElement: <ErrorElement />,
     element: (
       <PrivateRoute>
         <DashBoardLayout></DashBoardLayout>
@@ -78,9 +78,7 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/payment/:id",
         loader: ({ params }) =>
-          fetch(
-            `https://doctors-portal-server-nu-eight.vercel.app/bookings/${params.id}`
-          ),
+          fetch(`${process.env.REACT_APP_SERVER_URL}/${params.id}`),
         element: <Payment />,
       },
     ],
