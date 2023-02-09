@@ -21,7 +21,7 @@ const MyAppoint = () => {
       return data;
     },
   });
-  
+
   if (isLoading) {
     return <Loading />;
   } else if (!isLoading && !data.length) {

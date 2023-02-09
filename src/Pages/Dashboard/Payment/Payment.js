@@ -3,13 +3,11 @@ import { loadStripe } from "@stripe/stripe-js";
 import React from "react";
 import { useLoaderData } from "react-router-dom";
 import CheckOutForm from "./CheckOutForm";
-
-const stripePromise = loadStripe(
-  "pk_test_51M6760DGzIBPkB4GPjLEqa79J3r1usKCA5qKm3bRE7VDlrPEQSirNYmhXBz5NOUIweLDh0ItBsQt17CvVkVcaxMq00oumfL54S"
-);
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
 
 const Payment = () => {
   const data = useLoaderData();
+
   const { selectedDate, treatmentName, slot, price } = data;
 
   return (

@@ -9,7 +9,6 @@ const CheckOutForm = ({ data }) => {
   const stripe = useStripe();
   const elements = useElements();
   const { price, email, userName, _id } = data;
-
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_URL}/create-payment-intent`, {
       method: "POST",
@@ -20,7 +19,7 @@ const CheckOutForm = ({ data }) => {
       body: JSON.stringify({ price }),
     })
       .then((res) => res.json())
-      .then((data) => setClientSecret(data.clientSecret));
+      .then((data) => setClientSecret(data));
   }, [price]);
 
   const handleSubmit = async (e) => {
@@ -28,11 +27,12 @@ const CheckOutForm = ({ data }) => {
     if (!stripe || !elements) {
       return;
     }
+
     const card = elements.getElement(CardElement);
     if (card === null) {
       return;
     }
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const { error } = await stripe.createPaymentMethod({
       type: "card",
       card,
     });
@@ -45,7 +45,7 @@ const CheckOutForm = ({ data }) => {
     }
 
     const { paymentIntent, error: confirmError } =
-      await stripe.confirmCardPayment(clientSecret, {
+      await stripe.confirmCardPayment(clientSecret.clientSecret, {
         payment_method: {
           card,
           billing_details: {
@@ -54,7 +54,6 @@ const CheckOutForm = ({ data }) => {
           },
         },
       });
-
     if (confirmError) {
       setCardError(confirmError.message);
       return;
